@@ -8,21 +8,32 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 class HelloController extends AbstractController{
     /** 
      * @Route("/hello", name="hello")
      */
     public function index(Request $request){
-        $name = $request->get("name");
-        $name2 = $request->get("name2");
-        $result = <<< EOM
-        <ul>
-          <li>{$name}</li>
-          <li>{$name2}</li>
-        </ul>
-EOM;
-        //$result = $this->getSubscribedServices();
-        return new Response($result);
+        $form=$this->createFormBuilder()
+        ->add("input",TextType::class)
+        ->add("save",SubmitType::class,["label"=>"click"])
+        ->getForm();
+        
+        if($request->getMethod()=="POST"){
+            $form->handleRequest($request);
+            $msg="{$form->get("input")->getData()}さんですね";
+        }
+        else{
+            $msg="名前を教えて";
+        }
+
+        return $this->render("hello/index.html.twig",[
+            "title"=>"名前を聞くやつ",
+            "name"=>$msg,
+            "form"=>$form->createView()
+        ]);
     }
 
     /**
