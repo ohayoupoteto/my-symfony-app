@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -83,6 +84,35 @@ EOM;
             "form"=>$form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/session_test",name="session_test")
+     */
+    public function session_test(Request $request,SessionInterface $session){
+        $data=new MyData();
+
+        $form=$this->createFormBuilder($data)
+        ->add("data",TextType::class)
+        ->add("save",SubmitType::class,["label"=>"click"])
+        ->getForm();
+
+        if($request->getMethod()=="POST"){
+            $form->handleRequest($request);
+            $obj=$form->getData();
+            if($obj->getData()=="!"){
+                $session->remove("data");
+            }
+            else{
+                $session->set("data",$obj->getData());
+            }
+        }
+
+        return $this->render("hello/session_test.html.twig",[
+           "data"=>$session->get("data"),
+           "form"=>$form->createView(),
+        ]);
+
+    }
 }
 
 class Person{
@@ -112,5 +142,16 @@ class Person{
     }
     public function setEmail($email){
         $this->email = $email;
+    }
+}
+
+class MyData{
+    private $data="";
+
+    public function getData(){
+        return $this->data;
+    }
+    public function setData($data){
+        $this->data=$data;
     }
 }
