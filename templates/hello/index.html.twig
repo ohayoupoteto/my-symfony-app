@@ -1,17 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
-    </head>
-    <body>
-        タイトル:{{title}}
-        名前:{{name}}
-        {{form_start(form)}}
-        {{form_widget(form)}}
-        {{form_end(form)}}
+{% extends 'base.html.twig' %}
 
-    </body>
-</html>
+{% block page %}{{title}}
+{% endblock %}
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block body %}
+    {% set price = 810 %}
+    {% set number = 114514 %}
+    {% set flag = true %}
+    {% if flag %}
+        {% for i in array %}
+            <ul>
+                <li>{{i.name1}}</li>
+                <li>{{i.name2}}</li>
+                <li>{{i.name3}}</li>
+            </ul>
+        {% endfor %}
+        {{price}}円
+        {{number}}個
+        {{message}}
+    {% endif %}
+{% endblock %}

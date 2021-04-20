@@ -31,10 +31,26 @@ class HelloController extends AbstractController{
         else{
             $msg="名前を教えて";
         }
-
+        $array1 = [
+            'name1' => 'unko',
+            'name2' => 'sikko',
+            'name3' => 'pikko'
+        ];
+        $array2 = [
+            'name1' => 'unko',
+            'name2' => 'sikko',
+            'name3' => 'pikko'
+        ];
+        $array3 = [
+            'name1' => 'unko',
+            'name2' => 'sikko',
+            'name3' => 'pikko'
+        ];
         return $this->render("hello/index.html.twig",[
             "title"=>"名前を聞くやつ",
             "name"=>$msg,
+            'message'=>'これはサンプルページです',
+            'array'=> [$array1,$array2,$array3],
             "form"=>$form->createView()
         ]);
     }
