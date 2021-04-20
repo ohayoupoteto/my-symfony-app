@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% import 'macro.html.twig' as m %}
 
 {% block page %}{{title}}
 {% endblock %}
@@ -7,6 +8,12 @@
 {% endblock %}
 
 {% block body %}
+<table>
+{{m.input('text','Name','noname')}}
+{{m.input('number','Age',0)}}
+{{m.input('email','Email','no@mail')}}
+{{m.submit('click')}}
+</table>
     {% set price = 810 %}
     {% set number = 114514 %}
     {% set flag = true %}
@@ -22,4 +29,4 @@
         {{number}}個
         {{message}}
     {% endif %}
-{% endblock %}
+    {% endblock %}  
