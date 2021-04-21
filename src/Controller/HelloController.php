@@ -50,7 +50,7 @@ class HelloController extends AbstractController{
             "title"=>"名前を聞くやつ",
             "name"=>$msg,
             'message'=>'これはサンプルページです',
-            'array'=> [$array1,$array2,$array3],
+            'arrays'=> [$array1,$array2,$array3],
             "form"=>$form->createView()
         ]);
     }

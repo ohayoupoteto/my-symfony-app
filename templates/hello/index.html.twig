@@ -8,17 +8,13 @@
 {% endblock %}
 
 {% block body %}
-<table>
-{{m.input('text','Name','noname')}}
-{{m.input('number','Age',0)}}
-{{m.input('email','Email','no@mail')}}
-{{m.submit('click')}}
-</table>
+includeを使ったテンプレート
+{% include '/hello/table.html.twig' with [arrays] %}
     {% set price = 810 %}
     {% set number = 114514 %}
     {% set flag = true %}
     {% if flag %}
-        {% for i in array %}
+        {% for i in arrays %}
             <ul>
                 <li>{{i.name1}}</li>
                 <li>{{i.name2}}</li>
