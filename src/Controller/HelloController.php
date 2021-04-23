@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+use App\Entity\Person;
+
 class HelloController extends AbstractController{
     /** 
      * @Route("/hello", name="hello")
@@ -129,9 +131,23 @@ EOM;
         ]);
 
     }
+    /**
+     * @Route("/getPersonData",name="getPersonData")
+     */
+    public function getPersonData(Request $request){
+        $repository=$this->getDoctrine()
+        ->getRepository(Person::class);
+
+        $datas=$repository->findall();
+
+        return $this->render('hello/getPersonData.html.twig',[
+            'title'=>'getPersonData',
+            'datas'=>$datas,
+        ]);
+    }
 }
 
-class Person{
+class Person2{
     protected $name;
     protected $age;
     protected $email;
