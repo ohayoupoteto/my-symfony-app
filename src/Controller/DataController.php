@@ -45,6 +45,16 @@ class DataController extends AbstractController
             'form'=>$form->createView(),
         ]);
     }
+/**
+ * @Route("/find2/{id}",name="find2")
+ */
+    public function find2(Request $request,Person $person){
+        return $this->render('data/find2.html.twig',[
+            'title'=>'エンティティの自動フェッチ',
+            'data'=>$person,
+        ]
+        );
+    }
 }
 
 class FindForm{

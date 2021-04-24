@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block page %}{{title}}{% endblock %}
+{% block title %}{{title}}{% endblock %}
+
+{% block body %}
+<h2>find body</h2>
+
+{% if data !=null %}
+<table>
+<tr>
+<th>id</th>
+<td>{{data.id}}</td>
+</tr>
+<tr>
+<th>name</th>
+<td>{{data.name}}</td>
+</tr>
+<tr>
+<th>email</th>
+<td>{{data.mail}}</td>
+</tr>
+<tr>
+<th>age</th>
+<td>{{data.age}}</td>
+</tr>
+</table>
+{% endif %}
+{% endblock %}
