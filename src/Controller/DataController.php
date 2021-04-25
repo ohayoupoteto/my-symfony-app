@@ -55,8 +55,8 @@ class DataController extends AbstractController
         ]
         );
     }
-}
 
+}
 class FindForm{
     private $find;
     public function getFind(){
