@@ -31,7 +31,6 @@ class DataController extends AbstractController
         if($request->getMethod()=='POST'){
             $form->handleRequest($request);
             $data=$form->getData()->getFind();
-
             $repository=$this->getDoctrine()->getRepository(Person::class);
             $result=$repository->find($data);
         }

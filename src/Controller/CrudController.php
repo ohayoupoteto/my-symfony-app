@@ -69,4 +69,27 @@ public function update(Request $request,Person $person){
         ]);
     }
 }
+
+/**
+ * @Route("/delete/{id}",name="delete")
+ */
+public function delete(Request $request,Person $person){
+    $form=$this->createForm(PersonType::class,$person);
+
+    if($request->getMethod()=='POST'){
+        $form->handleRequest($request);
+        //$person=$form->getData();
+        $manager=$this->getDoctrine()->getManager();
+        $manager->remove($person);
+        $manager->flush();
+        return $this->redirect('/getPersonData');
+    }
+    else{
+        return $this->render('crud/create.html.twig',[
+            'form'=>$form->createView(),
+            'title'=>'deleteする',
+        ]);
+    }
+}
+
 }
