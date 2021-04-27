@@ -30,17 +30,17 @@ class DataController extends AbstractController
 
         if($request->getMethod()=='POST'){
             $form->handleRequest($request);
-            $data=$form->getData()->getFind();
+            $find_name=$form->getData()->getFind();
             $repository=$this->getDoctrine()->getRepository(Person::class);
-            $result=$repository->find($data);
+            $result=$repository->findByName($find_name);
         }
         else{
             $result=null;
         }
 
         return $this->render('data/find.html.twig',[
-            'title'=>'IDでエンティティを検索する',
-            'data'=>$result,
+            'title'=>'nameでエンティティを検索する',
+            'datas'=>$result,
             'form'=>$form->createView(),
         ]);
     }
