@@ -32,17 +32,28 @@ class PersonRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult(); */
 
-        $attr=explode(',',$value);
+        /* $attr=explode(',',$value);
         return $this->createQueryBuilder('p')
         ->where('p.name in (?1,?2)')
         ->setParameters([1=>$attr[0],2=>$attr[1]]) //setParameter「s」であることに注意
+        ->getQuery()
+        ->getResult(); */
+        $array=explode(',',$value);
+        $builder=$this->createQueryBuilder('p');
+        return $builder->where($builder->expr()->in('p.name',$array))
         ->getQuery()
         ->getResult();
     }
 
     public function findByAge($value){
-        return $this->createQueryBuilder('p')
+       /*  return $this->createQueryBuilder('p')
         ->where('p.age >= ?1')
+        ->setParameter(1,$value)
+        ->getQuery()
+        ->getResult(); */
+
+        $builder=$this->createQueryBuilder('p');
+        return $builder->where($builder->expr()->gte('p.age','?1'))
         ->setParameter(1,$value)
         ->getQuery()
         ->getResult();
