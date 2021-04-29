@@ -38,9 +38,17 @@ class PersonRepository extends ServiceEntityRepository
         ->setParameters([1=>$attr[0],2=>$attr[1]]) //setParameter「s」であることに注意
         ->getQuery()
         ->getResult(); */
-        $array=explode(',',$value);
+
+        /* $array=explode(',',$value);
         $builder=$this->createQueryBuilder('p');
         return $builder->where($builder->expr()->in('p.name',$array))
+        ->getQuery()
+        ->getResult(); */
+
+        $builder=$this->createQueryBuilder('p');
+        return $builder->where($builder->expr()->like('p.name','?1'))
+        ->orWhere($builder->expr()->like('p.mail','?2'))
+        ->setParameters([1=>'%'.$value.'%',2=>'%'.$value.'%'])
         ->getQuery()
         ->getResult();
     }
@@ -52,14 +60,23 @@ class PersonRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult(); */
 
+        $array=explode(',',$value);
         $builder=$this->createQueryBuilder('p');
         return $builder->where($builder->expr()->gte('p.age','?1'))
-        ->setParameter(1,$value)
+        ->andWhere($builder->expr()->lte('p.age','?2'))
+        ->setParameters([1=>$array[0],2=>$array[1]])
         ->getQuery()
         ->getResult();
     }
 
-
+    public function findAllWithSort(){
+        return $this->createQueryBuilder('p')
+        ->orderBy('p.age','ASC')
+        ->setFirstResult(0)
+        ->setMaxResults(3)
+        ->getQuery()
+        ->getResult();
+    }
 
     // /**
     //  * @return Person[] Returns an array of Person objects
