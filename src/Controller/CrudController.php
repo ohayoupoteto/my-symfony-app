@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\PersonType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -23,7 +25,7 @@ class CrudController extends AbstractController
 /**
  * @Route("/create",name="create")
  */
-    public function create(Request $request){
+    public function create(Request $request,ValidatorInterface $validator){
         $person=new Person();
         $form=$this->createFormBuilder($person)
         ->add('name',TextType::class)
@@ -35,10 +37,20 @@ class CrudController extends AbstractController
         if($request->getMethod()=='POST'){
             $form->handleRequest($request);
             $person=$form->getData();
-            $manager=$this->getDoctrine()->getManager();
-            $manager->persist($person);
-            $manager->flush();
-            return $this->redirect('/getPersonData');
+
+            $errors=$validator->validate($person);
+            if(count($errors)==0){
+                $manager=$this->getDoctrine()->getManager();
+                $manager->persist($person);
+                $manager->flush();
+                return $this->redirect('/getPersonData');
+            }
+            else{
+                return $this->render('crud/create.html.twig',[
+                    'form'=>$form->createView(),
+                    'title'=>'createしたいけどエラー',
+                ]);
+            }
         }
         else{
             return $this->render('crud/create.html.twig',[
@@ -46,7 +58,7 @@ class CrudController extends AbstractController
                 'title'=>'createする',
             ]);
         }
-}
+    }
 
 /**
  * @Route("/update/{id}",name="update")

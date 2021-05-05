@@ -33,6 +33,10 @@ class DataController extends AbstractController
             $find_name=$form->getData()->getFind();
             $repository=$this->getDoctrine()->getRepository(Person::class);
             $result=$repository->findByName($find_name);
+
+            /* $manager=$this->getDoctrine()->getManager();
+            $query=$manager->createQuery("SELECT p FROM App\Entity\Person p WHERE p.name = '{$find_name}'");
+            $result=$query->getResult(); */
         }
         else{
             $result=null;

@@ -138,7 +138,7 @@ EOM;
         $repository=$this->getDoctrine()
         ->getRepository(Person::class);
 
-        $datas=$repository->findAllWithSort();
+        $datas=$repository->findAll();
 
         return $this->render('hello/getPersonData.html.twig',[
             'title'=>'getPersonData',
