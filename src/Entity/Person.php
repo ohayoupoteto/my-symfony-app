@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PersonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -38,6 +40,16 @@ class Person
      * @Assert\NotBlank(message="入力してください")
      */
     private $age;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="person")
+     */
+    private $messages;
+
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -78,5 +90,39 @@ class Person
         $this->age = $age;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessages(Message $messages): self
+    {
+        if (!$this->messages->contains($messages)) {
+            $this->messages[] = $messages;
+            $messages->setPerson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessages(Message $messages): self
+    {
+        if ($this->messages->removeElement($messages)) {
+            // set the owning side to null (unless already changed)
+            if ($messages->getPerson() === $this) {
+                $messages->setPerson(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(){
+        return $this->getName(); //ここで取得するプロパティがcreateの時のpersonのフォームの選択肢になる
     }
 }
