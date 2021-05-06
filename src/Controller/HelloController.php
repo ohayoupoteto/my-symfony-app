@@ -138,11 +138,11 @@ EOM;
         $repository=$this->getDoctrine()
         ->getRepository(Person::class);
 
-        $datas=$repository->findAll();
+        $persons=$repository->findAll();
 
         return $this->render('hello/getPersonData.html.twig',[
             'title'=>'getPersonData',
-            'datas'=>$datas,
+            'persons'=>$persons,
         ]);
     }
 }
