@@ -1,0 +1,31 @@
+{% if maxPages > 1 %}
+<ul class="pagination">
+<li class="page-item">
+<a href="{{path('message/page',{page:1})}}" class="page-link">|<<</a>
+</li>
+
+<li class="page-item">
+<a href="{{path('message/page',{page:thisPage-1 < 1 ? 1 : thisPage-1})}}" class="page-link"><<</a>
+</li>
+</ul>
+
+{% for i in (thisPage-2)..(thisPage+2) %}
+{% if i > 0 %}
+{% if i <= maxPages %}
+<li class="page-item">
+<a href="{{path('message/page',{page:i})}}" class="page-link">{{i}}</a>
+</li>
+{% endif %}
+{% endif %}
+{% endfor %}
+
+<li class="page-item">
+<a href="{{path('message/page',{page:thisPage+1 <= maxPages ? thisPage+1 : thisPage})}} " class="page-link">>></a>
+</li>
+
+<li class="page-item">
+<a href="{{path('message/page',{page:maxPages})}}" class="page-link">>>|</a>
+</li>
+
+</ul>
+{% endif %}

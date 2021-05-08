@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{title}}{% endblock %}
+{% block page %}{{title}}{% endblock %}
+
+{% block body %}
+<h2>メッセージ一覧(ページネーション有り)</h2>
+<p>{{thisPage}} page.</p>
+<table>
+<tr>
+<th>id</th>
+<th>内容</th>
+<th>投稿日</th>
+<th>投稿者</th>
+</tr>
+{% for message in messages %}
+<tr>
+<td>{{message.id}}</td>
+<td>{{message.content}}</td>
+<td>{{message.posted.format('Y-m-d H:i:s')}}</td>
+<td>{{message.person.name}}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% include 'message/pageNav.html.twig' with [thisPage,maxPages] %}
+
+{% endblock %}

@@ -66,7 +66,22 @@ class MessageController extends AbstractController
             'msg'=>$msg,
             'form'=>$form->createView(),
         ]);
-        
+    }
 
+    /**
+     * @Route("/message/page/{page}",name="message/page")
+     */
+    public function page($page=1){
+        $limit=1;
+        $repository=$this->getDoctrine()->getRepository(Message::class);
+        $paginator=$repository->getPage($page,$limit);
+        $maxPages=ceil($paginator->count()/$limit);
+
+        return $this->render('/message/page.html.twig',[
+            'title'=>'ページネーション',
+            'messages'=>$paginator->getIterator(),
+            'maxPages'=>$maxPages,
+            'thisPage'=>$page,
+        ]);
     }
 }
