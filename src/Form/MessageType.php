@@ -23,6 +23,6 @@ class MessageType extends AbstractType{
     }
 
     public function configureOptions(OptionsResolver $resolver){
-        $resolver->setDefaults(['date_class'=>Message::class]);
+        $resolver->setDefaults(['data_class'=>Message::class]);
     }
 }
