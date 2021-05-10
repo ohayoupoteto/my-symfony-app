@@ -15,11 +15,14 @@ class FlashController extends AbstractController
      * @Route("/flash", name="flash")
      */
     public function index(Request $request){
-        $form=$this->createForm(FlashType::class,null);
+        $formobj=new FlashForm();
+        /* $formobj->setName('池田');
+        $formobj->setMail('unko@gmail.com'); */
+        $form=$this->createForm(FlashType::class,$formobj);
         if($request->getMethod()=='POST'){
             $form->handleRequest($request);
-            $datas=$form->getData()['mail'];
-            $this->addFlash('info.mail','ようこそ、'.$datas.'さん');
+            $datas=$form->getData();
+            $this->addFlash('info-mail',$datas);
             $msg=null;
         }
         else{
@@ -32,5 +35,27 @@ class FlashController extends AbstractController
             'datas'=>$datas,
         ]);
     }
-        
+    
+}
+
+class FlashForm{
+    private $name;
+    private $mail;
+
+    public function getName(){
+        return $this->name;
+    }
+    public function setName($name){
+        $this->name=$name;
+    }
+    public function getMail(){
+        return $this->mail;
+    }
+    public function setMail($mail){
+        $this->mail=$mail;
+    }
+
+    public function __toString(){
+        return $this->getMail();
+    }
 }

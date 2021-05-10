@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{% for i in app.flashes('info.mail') %}
+{% for i in app.flashes('info-mail') %}
 <div style='color:#ff0000;'>{{i}}</div>
 {% endfor %}
 <h2>{{msg}}</h2>
@@ -9,4 +9,3 @@
 {{form_widget(form)}}
 {{form_end(form)}}
 {% endblock %}
-
