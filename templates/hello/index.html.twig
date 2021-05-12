@@ -1,28 +1,28 @@
 {% extends 'base.html.twig' %}
-{% import 'macro.html.twig' as m %}
 
-{% block page %}{{title}}
-{% endblock %}
-{% block title %}
-    {{title}}
-{% endblock %}
+
+{% block page %}一般会員用ページ{% endblock %}
+{% block title %}一般会員用ページ{% endblock %}
 
 {% block body %}
-includeを使ったテンプレート
-{% include '/hello/table.html.twig' with [arrays] %}
-    {% set price = 810 %}
-    {% set number = 114514 %}
-    {% set flag = true %}
-    {% if flag %}
-        {% for i in arrays %}
-            <ul>
-                <li>{{i.name1}}</li>
-                <li>{{i.name2}}</li>
-                <li>{{i.name3}}</li>
-            </ul>
-        {% endfor %}
-        {{price}}円
-        {{number}}個
-        {{message}}
-    {% endif %}
-    {% endblock %}  
+<h2>一般会員用ページ</h2>
+
+<table>
+<tr>
+<th>id</th>
+<td>{{user.id}}</td>
+</tr>
+<tr>
+<th>名前</th>
+<td>{{user.username}}</td>
+</tr>
+<tr>
+<th>メアド</th>
+<td>{{user.email}}</td>
+</tr>
+<tr>
+<th>role</th>
+<td>{{user.roles[0]}}</td>
+</tr>
+</table>
+{% endblock %}  

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ログイン画面{% endblock %}
+{% block page %}ログイン画面{% endblock %}
+
+{% block body %}
+<h2>ログイン画面</h2>
+<p>{{user_message}}</p>
+
+{% if errors %}
+<p>{{errors.messageKey}}</p>
+{% endif %}
+
+<form action="{{path('login')}}" method="post">
+<table>
+<tr>
+<th>名前</th>
+<td><input type="text" id="username" name="_username" /></td>
+</tr>
+<tr>
+<th>パスワード</th>
+<td><input type="text" id="password" name="_password" /></td>
+</tr>
+<tr><input type="submit" label="ログイン"></tr>
+</table>
+</form>
+
+{% endblock %}

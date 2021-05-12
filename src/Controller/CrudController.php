@@ -36,9 +36,10 @@ class CrudController extends AbstractController
 
         if($request->getMethod()=='POST'){
             $form->handleRequest($request);
-            $person=$form->getData();
+            
 
             $errors=$validator->validate($person);
+            $add=$person->getAge();
             if(count($errors)==0){
                 $manager=$this->getDoctrine()->getManager();
                 $manager->persist($person);
@@ -49,13 +50,16 @@ class CrudController extends AbstractController
                 return $this->render('crud/create.html.twig',[
                     'form'=>$form->createView(),
                     'title'=>'createしたいけどエラー',
+                    'add'=>$add,
                 ]);
             }
         }
         else{
+            $add=null;
             return $this->render('crud/create.html.twig',[
                 'form'=>$form->createView(),
                 'title'=>'createする',
+                'add'=>$add,
             ]);
         }
     }

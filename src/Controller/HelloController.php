@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 use App\Entity\Person;
 
 class HelloController extends AbstractController{
@@ -21,39 +23,11 @@ class HelloController extends AbstractController{
      * @Route("/hello", name="hello")
      */
     public function index(Request $request){
-        $form=$this->createFormBuilder()
-        ->add("input",TextType::class)
-        ->add("save",SubmitType::class,["label"=>"click"])
-        ->getForm();
-
-        if($request->getMethod()=="POST"){
-            $form->handleRequest($request);
-            $msg="{$form->get("input")->getData()}さんですね";
+        if(!$this->getUser()->getIsActivated()){
+            throw new AccessDeniedException('アクセス権がありません');
         }
-        else{
-            $msg="名前を教えて";
-        }
-        $array1 = [
-            'name1' => 'unko',
-            'name2' => 'sikko',
-            'name3' => 'pikko'
-        ];
-        $array2 = [
-            'name1' => 'unko',
-            'name2' => 'sikko',
-            'name3' => 'pikko'
-        ];
-        $array3 = [
-            'name1' => 'unko',
-            'name2' => 'sikko',
-            'name3' => 'pikko'
-        ];
-        return $this->render("hello/index.html.twig",[
-            "title"=>"名前を聞くやつ",
-            "name"=>$msg,
-            'message'=>'これはサンプルページです',
-            'arrays'=> [$array1,$array2,$array3],
-            "form"=>$form->createView()
+        return $this->render('hello/index.html.twig',[
+            'user'=>$this->getUser(),
         ]);
     }
 

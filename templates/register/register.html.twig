@@ -1,15 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block page %}
-{{title}}
-{% endblock %}
-{% block title %}
-{{title}}
-{% endblock %}
+{% block page %}Register{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block body %}
+
 {{form_start(form)}}
 {{form_widget(form)}}
 {{form_end(form)}}
-{{add}}
+
 {% endblock %}
