@@ -23,7 +23,7 @@ class RegisterController extends AbstractController
         
         if($request->getMethod()=='POST'){
             if($form->isValid()){
-                $password=$passwordEncoder->encodePassword($user,$user->getPassword);
+                $password=$passwordEncoder->encodePassword($user,$user->getPassword());
                 $user->setPassword($password);
                 $manager=$this->getDoctrine()->getManager();
                 $manager->persist($user);

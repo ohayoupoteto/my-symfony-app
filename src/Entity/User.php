@@ -104,7 +104,7 @@ class User implements UserInterface, \Serializable
     }
 
     public function getRoles(){
-        if($this->username='admin'){
+        if($this->username=='admin'){
             return ['ROLE_ADMIN'];
         }
         else{
@@ -121,7 +121,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->isActive,
+            $this->isActivated,
         ]);
     }
 
@@ -130,7 +130,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->isActive,
+            $this->isActivated,
         )=unserialize($serialized,['allowed_classes'=>false]);
     }
 }
